@@ -1,0 +1,5 @@
+const CACHE='ruhi-mobile-v44-pwa-v2';
+const ASSETS=['./','./index.html','./style.css','./app.js','./manifest.json','./icons/icon-192.png','./icons/icon-512.png'];
+self.addEventListener('install',event=>event.waitUntil((async()=>{const cache=await caches.open(CACHE);await cache.addAll(ASSETS);await self.skipWaiting();})()));
+self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const key of await caches.keys())if(key!==CACHE)await caches.delete(key);await self.clients.claim();})()));
+self.addEventListener('fetch',event=>{const req=event.request;if(req.method!=='GET')return;event.respondWith((async()=>{const cached=await caches.match(req);if(cached)return cached;try{const response=await fetch(req);if(response.ok&&new URL(req.url).origin===self.location.origin){const cache=await caches.open(CACHE);cache.put(req,response.clone());}return response;}catch(err){if(req.mode==='navigate')return (await caches.match('./index.html'))||Response.error();return Response.error();}})());});

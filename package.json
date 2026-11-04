@@ -1,0 +1,15 @@
+{
+  "name": "ruhi-mobile-v44-offline",
+  "version": "44.0.0-offline",
+  "private": true,
+  "description": "Ruhi Mobile V44 offline local edition",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
+  }
+}
